@@ -21,6 +21,7 @@ func BubbleSort(s []int) []int {
 		}
 	}
 	fmt.Println("Your sorted number is: ", s)
+
 	return nil
 }
 
