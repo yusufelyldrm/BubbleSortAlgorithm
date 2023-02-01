@@ -14,7 +14,6 @@ func BubbleSort(s []int) []int {
 
 	//compare each element to each other
 	for i := 0; i < len(s); i++ {
-		//if the element is greater than the next element, swap them
 		for j := 0; j < len(s)-1; j++ {
 			if s[j] > s[j+1] {
 				Swap(s, j)
