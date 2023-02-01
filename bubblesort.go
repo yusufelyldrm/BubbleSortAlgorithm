@@ -1,66 +1,61 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
-	"os"
 	"strconv"
-	"strings"
 )
 
 func main() {
-
-	fmt.Println("\nPlease input integers as one-line string, " +
-		"which separated with space character, up to 10 integers, e.g. \"3 1 9 4 5234 0 2 5 689\" ")
-
-	// 1. read input & conditioning
-	strSlice := readSplitInputLine()
-	if len(strSlice) > 10 {
-		fmt.Println("Number of input integers > 10")
-		return
-	}
-
-	// 2. convert to int slice
-	intSlice := make([]int, len(strSlice))
-	for i, v := range strSlice {
-		intSlice[i], _ = strconv.Atoi(v)
-	}
-
-	// 3. BubbleSort
-	BubbleSort(intSlice)
-	fmt.Println(intSlice)
+	TakeInput()
 }
 
-// readSplitInputLine reading whole input line and split them into string slice
-func readSplitInputLine() []string {
-	// scan
-	scanner := bufio.NewScanner(os.Stdin)
-	scanner.Scan()
-	inputLine := scanner.Text()
-	// return split integers
-	return strings.Fields(inputLine)
-}
+// BubbleSort function takes a slice of integers as input and sorts it
+func BubbleSort(s []int) []int {
 
-// BubbleSort using bubble sort algorithm sorting the input array from least to greatest
-func BubbleSort(intSlice []int) {
-
-	sliceLen := len(intSlice)
-	for outerIdx := 0; outerIdx < sliceLen-1; outerIdx++ {
-		noMoreSwap := true
-		for innerIdx := 0; innerIdx < sliceLen-1; innerIdx++ {
-			if intSlice[innerIdx] > intSlice[innerIdx+1] {
-				Swap(intSlice, innerIdx)
-				noMoreSwap = false
+	//compare each element to each other
+	for i := 0; i < len(s); i++ {
+		//if the element is greater than the next element, swap them
+		for j := 0; j < len(s)-1; j++ {
+			if s[j] > s[j+1] {
+				Swap(s, j)
 			}
 		}
-		// for faster stop if no more swap occurred
-		if noMoreSwap {
-			break
-		}
 	}
+	fmt.Println("Your sorted number is: ", s)
+	return nil
 }
 
-// Swap would swap the content of intSlice in position i and position i+1
-func Swap(intSlice []int, i int) {
-	intSlice[i], intSlice[i+1] = intSlice[i+1], intSlice[i]
+// Swap function swaps the elements in the slice
+func Swap(s []int, j int) {
+	s[j], s[j+1] = s[j+1], s[j]
+}
+
+func TakeInput() []int {
+	var input string
+
+	//declare an empty slice of integer up to 10
+	s := make([]int, 0, 10)
+
+	fmt.Println(" Enter the string of integers you want to sort, up to 10")
+
+	//loop through the slice and take input from the user
+	for i := 0; i < 10; i++ {
+		fmt.Println("Enter the integer , enter X to stop")
+		fmt.Scan(&input)
+		num, err := strconv.Atoi(input)
+
+		//if the user enters X, break the loop and call the bubblesort function
+		if input == "X" {
+			break
+		}
+
+		if err != nil {
+			fmt.Println("Invalid input , please enter a integer")
+		} else {
+			//append the integer to the slice
+			s = append(s, num)
+		}
+		BubbleSort(s)
+	}
+	return nil
 }
